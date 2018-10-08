@@ -5,8 +5,9 @@ add_dependencies(test_benchmark benchmark)
 
 target_link_libraries(test_benchmark
     benchmark
-    gtest_main
+    gmock_main
     gtest
+    gmock
     )
 
 add_test(NAME test_benchmark_test COMMAND test_benchmark)

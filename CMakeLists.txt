@@ -19,8 +19,6 @@ endif()
 add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
                  ${CMAKE_BINARY_DIR}/googletest-build)
 
-
-
 project(benchmark CXX)
 
 add_definitions("-std=c++11")
