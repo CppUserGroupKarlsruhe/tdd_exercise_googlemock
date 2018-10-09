@@ -57,7 +57,7 @@ TEST(BenchmarkTest, ResultIsTransferredToServer) {
     EXPECT_CALL(api, upload_fastest_time_for(machine_id, duration))
         .Times(1);
 
-    benchmark::benchmark(std::ref(f), machine_id, clock, api);
+    EXPECT_TRUE(benchmark::benchmark(std::ref(f), machine_id, clock, api));
 }
 
 TEST(BenchmarkTest, ResultIsWorseThanWhatIsOnTheServer) {
@@ -69,7 +69,7 @@ TEST(BenchmarkTest, ResultIsWorseThanWhatIsOnTheServer) {
     EXPECT_CALL(api, upload_fastest_time_for(testing::_, testing::_))
         .WillOnce(Throw(std::invalid_argument("Result is not better than current best")));
 
-    benchmark::benchmark(std::ref(f), machine_id, clock, api);
+    EXPECT_FALSE(benchmark::benchmark(std::ref(f), machine_id, clock, api));
 }
 
 TEST(BenchmarkTest, UnavailableServerLeadsToException) {
@@ -96,5 +96,5 @@ TEST(BenchmarkTest, UnavailableServerLeadsToThreeRetries) {
         .WillOnce(Throw(std::runtime_error("Server unavailable")))
         .WillOnce(Return());
 
-    benchmark::benchmark(std::ref(f), machine_id, clock, api);
+    EXPECT_TRUE(benchmark::benchmark(std::ref(f), machine_id, clock, api));
 }
