@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <string>
+#include <functional>
 
 namespace benchmark_cases {
     /**
@@ -30,5 +31,11 @@ namespace api {
      * @throws std::invalid_argument when the uploaded time is not better than the best one known for the given ID
      */
     void upload_fastest_time_for(std::string const & id, std::chrono::milliseconds const & time);
+
+}
+
+namespace benchmark {
+
+void benchmark(std::function<void()>);
 
 }

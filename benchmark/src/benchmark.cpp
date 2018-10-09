@@ -24,5 +24,13 @@ namespace api {
         throw std::runtime_error("The benchmark server cannot be reached. Please contact your administrator.");
     }
 
+}
+
+
+namespace benchmark {
+
+void benchmark(std::function<void()>)
+{
+}
 
 }
