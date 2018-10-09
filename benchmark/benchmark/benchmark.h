@@ -36,6 +36,10 @@ namespace api {
 
 namespace benchmark {
 
-void benchmark(std::function<void()> to_benchmark);
+struct clock {
+    virtual std::chrono::time_point<std::chrono::steady_clock> now() const = 0;
+};
+
+void benchmark(std::function<void()> to_benchmark, clock const & clock);
 
 }
