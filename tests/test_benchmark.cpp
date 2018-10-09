@@ -15,7 +15,7 @@ namespace {
 using ::testing::Return;
 using ::testing::Throw;
 
-TEST(BenchmarkTest, ExecuteFunction) {
+TEST(BenchmarkTest, BenchmarkExecutesFunctionExactlyOnce) {
     mock_function f;
 
     EXPECT_CALL(f, call())
