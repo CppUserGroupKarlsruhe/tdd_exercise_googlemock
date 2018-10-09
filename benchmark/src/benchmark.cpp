@@ -36,9 +36,17 @@ void benchmark(std::function<void()> to_benchmark, std::string const & id, clock
     auto const stop = clock.now();
     auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
 
-    try {
-        api.upload_fastest_time_for(id, elapsed);
-    } catch (std::invalid_argument const &) {
+    for (unsigned int retries = 0; retries <= 3; ++retries) {
+        try {
+            api.upload_fastest_time_for(id, elapsed);
+            return;
+        } catch (std::invalid_argument const &) {
+            return;
+        } catch (std::runtime_error const &) {
+            if (retries == 3) {
+                throw;
+            }
+        }
     }
 }
 
