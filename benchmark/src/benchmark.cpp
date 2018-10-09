@@ -35,7 +35,7 @@ void benchmark(std::function<void()> to_benchmark, std::string const & id, clock
     to_benchmark();
     auto const stop = clock.now();
     auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    api.upload_fastest_time_for("dummy", elapsed);
+    api.upload_fastest_time_for(id, elapsed);
 }
 
 }
