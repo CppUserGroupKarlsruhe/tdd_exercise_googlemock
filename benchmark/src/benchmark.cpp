@@ -30,15 +30,15 @@ namespace api {
 namespace benchmark {
 
 namespace {
-    void upload_result(std::chrono::milliseconds const & elapsed, std::string const & id, api & api)
+    bool upload_result(std::chrono::milliseconds const & elapsed, std::string const & id, api & api)
     {
         unsigned int const max_retries = 3;
         for (unsigned int retries = 0; retries <= max_retries; ++retries) {
             try {
                 api.upload_fastest_time_for(id, elapsed);
-                return;
+                return true;
             } catch (std::invalid_argument const &) {
-                return;
+                return false;
             } catch (std::runtime_error const &) {
                 if (retries == max_retries) {
                     throw;
@@ -48,14 +48,14 @@ namespace {
     }
 }
 
-void benchmark(std::function<void()> to_benchmark, std::string const & id, clock const & clock, api & api)
+bool benchmark(std::function<void()> to_benchmark, std::string const & id, clock const & clock, api & api)
 {
     auto const start = clock.now();
     to_benchmark();
     auto const stop = clock.now();
     auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
 
-    upload_result(elapsed, id, api);
+    return upload_result(elapsed, id, api);
 }
 
 }

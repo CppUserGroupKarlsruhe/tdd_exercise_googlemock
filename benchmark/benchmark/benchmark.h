@@ -45,6 +45,6 @@ struct api {
     virtual void upload_fastest_time_for(std::string const &, std::chrono::milliseconds const &) = 0;
 };
 
-void benchmark(std::function<void()> to_benchmark, std::string const & id, clock const & clock, api & api);
+bool benchmark(std::function<void()> to_benchmark, std::string const & id, clock const & clock, api & api);
 
 }
