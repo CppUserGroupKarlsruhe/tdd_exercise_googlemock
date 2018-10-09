@@ -14,6 +14,11 @@ namespace {
         MOCK_CONST_METHOD0(now, std::chrono::time_point<std::chrono::steady_clock>());
     };
 
+    struct mock_api {
+        MOCK_CONST_METHOD1(get_fastest_time_for, std::chrono::milliseconds(std::string const &));
+        MOCK_CONST_METHOD2(upload_fastest_time_for, void(std::string const &, std::chrono::milliseconds const &));
+    };
+
 }
 
 using ::testing::Return;
@@ -22,6 +27,7 @@ using ::testing::Throw;
 TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
     mock_function f;
     mock_clock clock;
+    mock_api api;
 
     ::testing::InSequence enforce_sequence;
     EXPECT_CALL(clock, now())
@@ -31,6 +37,14 @@ TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
     EXPECT_CALL(clock, now())
         .Times(1);
 
-    benchmark::benchmark(std::ref(f), clock);
+    benchmark::benchmark(std::ref(f), clock, api);
+}
+
+TEST(BenchmarkTest, ResultIsTransferredToServer) {
+    mock_function f;
+    mock_clock clock;
+    mock_api api;
+
+    benchmark::benchmark(std::ref(f), clock, api);
 }
 
