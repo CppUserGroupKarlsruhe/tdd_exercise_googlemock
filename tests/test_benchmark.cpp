@@ -5,11 +5,17 @@
 
 namespace {
 
+    struct mock_function {
+        MOCK_CONST_METHOD0(call, void());
+        void operator()(){call();}
+    };
+
 }
 
 using ::testing::Return;
 using ::testing::Throw;
 
 TEST(BenchmarkTest, ExecuteFunction) {
-    benchmark::benchmark(benchmark_cases::heavy_computation);
+    mock_function f;
+    benchmark::benchmark(std::ref(f));
 }
