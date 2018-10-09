@@ -28,7 +28,7 @@ TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
     mock_function f;
     std::string const machine_id("this is me");
     mock_clock clock;
-    mock_api api;
+    ::testing::NiceMock<mock_api> api;
 
     ::testing::InSequence enforce_sequence;
     EXPECT_CALL(clock, now())
@@ -42,7 +42,7 @@ TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
 }
 
 TEST(BenchmarkTest, ResultIsTransferredToServer) {
-    mock_function f;
+    ::testing::NiceMock<mock_function> f;
     std::string const machine_id("this is me");
     mock_clock clock;
     mock_api api;
