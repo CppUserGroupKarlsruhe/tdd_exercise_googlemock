@@ -33,5 +33,8 @@ TEST(BenchmarkTest, BenchmarkMeasuresTime) {
     mock_function f;
     mock_clock clock;
 
+    EXPECT_CALL(clock, now())
+        .Times(1);
+
     benchmark::benchmark(std::ref(f), clock);
 }
