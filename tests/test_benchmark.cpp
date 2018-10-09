@@ -10,6 +10,10 @@ namespace {
         void operator()(){call();}
     };
 
+    struct mock_clock {
+        MOCK_CONST_METHOD0(now, std::chrono::time_point<std::chrono::steady_clock>());
+    };
+
 }
 
 using ::testing::Return;
@@ -22,4 +26,11 @@ TEST(BenchmarkTest, BenchmarkExecutesFunctionExactlyOnce) {
         .Times(1);
 
     benchmark::benchmark(std::ref(f));
+}
+
+TEST(BenchmarkTest, BenchmarkMeasuresTime) {
+    mock_function f;
+    mock_clock clock;
+
+    benchmark::benchmark(std::ref(f), clock);
 }
