@@ -29,7 +29,7 @@ namespace api {
 
 namespace benchmark {
 
-void benchmark(std::function<void()> to_benchmark, clock const & clock, api & api)
+void benchmark(std::function<void()> to_benchmark, std::string const & id, clock const & clock, api & api)
 {
     auto const start = clock.now();
     to_benchmark();
