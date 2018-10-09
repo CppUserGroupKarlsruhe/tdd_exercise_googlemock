@@ -35,7 +35,7 @@ Hints for dealing with time
 
 The C++ standard offers `std::chrono::steady_clock::now()` to get
 the current time in an accurate fashion, see
-https://en.cppreference.com/w/cpp/chrono/steady_clock/now
+[here](https://en.cppreference.com/w/cpp/chrono/steady_clock/now).
 When you subtract to `time_point`s from each other you get a
 `std::chrono::duration` that you can `std::chrono::duration_cast`
 to `std::chrono::milliseconds`.
