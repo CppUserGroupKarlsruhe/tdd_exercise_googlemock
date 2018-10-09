@@ -17,5 +17,9 @@ using ::testing::Throw;
 
 TEST(BenchmarkTest, ExecuteFunction) {
     mock_function f;
+    
+    EXPECT_CALL(f, call())
+        .Times(1);
+
     benchmark::benchmark(std::ref(f));
 }
