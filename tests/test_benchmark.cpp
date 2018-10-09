@@ -83,3 +83,18 @@ TEST(BenchmarkTest, UnavailableServerLeadsToException) {
 
     EXPECT_THROW(benchmark::benchmark(std::ref(f), machine_id, clock, api), std::runtime_error);
 }
+
+TEST(BenchmarkTest, UnavailableServerLeadsToThreeRetries) {
+    ::testing::NiceMock<mock_function> f;
+    std::string const machine_id("this is me");
+    ::testing::NiceMock<mock_clock> clock;
+    mock_api api;
+
+    EXPECT_CALL(api, upload_fastest_time_for(testing::_, testing::_))
+        .WillOnce(Throw(std::runtime_error("Server unavailable")))
+        .WillOnce(Throw(std::runtime_error("Server unavailable")))
+        .WillOnce(Throw(std::runtime_error("Server unavailable")))
+        .WillOnce(Return());
+
+    benchmark::benchmark(std::ref(f), machine_id, clock, api);
+}
