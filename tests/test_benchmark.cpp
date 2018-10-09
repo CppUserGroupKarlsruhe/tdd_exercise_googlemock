@@ -10,6 +10,6 @@ namespace {
 using ::testing::Return;
 using ::testing::Throw;
 
-TEST(BenchmarkTest, Dummy) {
-
+TEST(BenchmarkTest, ExecuteFunction) {
+    benchmark::benchmark(benchmark_cases::heavy_computation);
 }
