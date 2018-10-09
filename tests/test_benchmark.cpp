@@ -19,14 +19,17 @@ namespace {
 using ::testing::Return;
 using ::testing::Throw;
 
-TEST(BenchmarkTest, BenchmarkMeasuresTimeOfSingleFunctionCall) {
+TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
     mock_function f;
     mock_clock clock;
 
+    ::testing::InSequence enforce_sequence;
+    EXPECT_CALL(clock, now())
+        .Times(1);
     EXPECT_CALL(f, call())
         .Times(1);
     EXPECT_CALL(clock, now())
-        .Times(2);
+        .Times(1);
 
     benchmark::benchmark(std::ref(f), clock);
 }
