@@ -26,6 +26,7 @@ using ::testing::Throw;
 
 TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
     mock_function f;
+    std::string const machine_id("this is me");
     mock_clock clock;
     mock_api api;
 
@@ -37,11 +38,12 @@ TEST(BenchmarkTest, BenchmarkMeasuresTimeBeforeAndAfterFunctionCall) {
     EXPECT_CALL(clock, now())
         .Times(1);
 
-    benchmark::benchmark(std::ref(f), clock, api);
+    benchmark::benchmark(std::ref(f), machine_id, clock, api);
 }
 
 TEST(BenchmarkTest, ResultIsTransferredToServer) {
     mock_function f;
+    std::string const machine_id("this is me");
     mock_clock clock;
     mock_api api;
 
@@ -52,9 +54,9 @@ TEST(BenchmarkTest, ResultIsTransferredToServer) {
     EXPECT_CALL(clock, now())
         .WillOnce(Return(before))
         .WillOnce(Return(after));
-    EXPECT_CALL(api, upload_fastest_time_for(::testing::_, duration))
+    EXPECT_CALL(api, upload_fastest_time_for(machine_id, duration))
         .Times(1);
 
-    benchmark::benchmark(std::ref(f), clock, api);
+    benchmark::benchmark(std::ref(f), machine_id, clock, api);
 }
 
