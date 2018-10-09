@@ -36,6 +36,6 @@ namespace api {
 
 namespace benchmark {
 
-void benchmark(std::function<void()>);
+void benchmark(std::function<void()> to_benchmark);
 
 }
