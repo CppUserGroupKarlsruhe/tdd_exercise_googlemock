@@ -60,3 +60,14 @@ TEST(BenchmarkTest, ResultIsTransferredToServer) {
     benchmark::benchmark(std::ref(f), machine_id, clock, api);
 }
 
+TEST(BenchmarkTest, ResultIsWorseThanWhatIsOnTheServer) {
+    ::testing::NiceMock<mock_function> f;
+    std::string const machine_id("this is me");
+    ::testing::NiceMock<mock_clock> clock;
+    mock_api api;
+
+    EXPECT_CALL(api, upload_fastest_time_for(testing::_, testing::_))
+        .WillOnce(Throw(std::invalid_argument("Result is not better than current best")));
+
+    benchmark::benchmark(std::ref(f), machine_id, clock, api);
+}
