@@ -40,6 +40,11 @@ struct clock {
     virtual std::chrono::time_point<std::chrono::steady_clock> now() const = 0;
 };
 
-void benchmark(std::function<void()> to_benchmark, clock const & clock);
+struct api {
+    virtual std::chrono::milliseconds get_fastest_time_for(std::string const &) const = 0;
+    virtual void upload_fastest_time_for(std::string const &, std::chrono::milliseconds const &) = 0;
+};
+
+void benchmark(std::function<void()> to_benchmark, clock const & clock, api & api);
 
 }

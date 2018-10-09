@@ -14,9 +14,9 @@ namespace {
         MOCK_CONST_METHOD0(now, std::chrono::time_point<std::chrono::steady_clock>());
     };
 
-    struct mock_api {
+    struct mock_api : public benchmark::api {
         MOCK_CONST_METHOD1(get_fastest_time_for, std::chrono::milliseconds(std::string const &));
-        MOCK_CONST_METHOD2(upload_fastest_time_for, void(std::string const &, std::chrono::milliseconds const &));
+        MOCK_METHOD2(upload_fastest_time_for, void(std::string const &, std::chrono::milliseconds const &));
     };
 
 }
