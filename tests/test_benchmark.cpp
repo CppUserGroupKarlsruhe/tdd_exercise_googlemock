@@ -39,8 +39,11 @@ TEST(BenchmarkTest, Dummy) {
     // for asserting exceptions
 
     sample_mock my_mock;
+
+    // expect a call that will never come -> failure
     EXPECT_CALL(my_mock, method_name(42))
         .WillOnce(Return(17));
 
-//  EXPECT_EQ(1, 0);
+    // state verification that also leads to failure
+    EXPECT_EQ(1, 0);
 }

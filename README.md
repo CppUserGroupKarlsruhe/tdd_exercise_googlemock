@@ -16,17 +16,29 @@ The task
 --------
 
 Implement a benchmarking function that measures the time required to
-execute a computationally heavy function and upload the result to an online
-server.
+execute a computationally heavy function and upload the result to an
+"online server".
 
-The online server "distinguishes" systems by a nickname. The server will
-only accept a result for a nickname if it is better than any previously
-recorded results for the same nickname. Since the server is often under
+The online server identifies systems by an ID. The server will
+only accept a result for an ID if it is better than any previously
+recorded results for the same ID. Since the server is often under
 heavy load, interacting with the server may temporarily fail, so please
 retry the respective operation up to three times in these cases.
 
-You can find the "API" for the "online" server at `benchmark/benchmark/benchmark.h`
-together with relevant documentation.
+You can find the API for the "online server" together with documentation
+at `benchmark/benchmark/benchmark.h`. There you also find an example of
+a function that needs to be benchmarked.
+
+
+Hints for dealing with time
+---------------------------
+
+The C++ standard offers `std::chrono::steady_clock::now()` to get
+the current time in an accurate fashion, see
+https://en.cppreference.com/w/cpp/chrono/steady_clock/now
+When you subtract to `time_point`s from each other you get a
+`std::chrono::duration` that you can `std::chrono::duration_cast`
+to `std::chrono::milliseconds`.
 
 
 Quickstart with C++
