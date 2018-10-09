@@ -31,9 +31,11 @@ namespace benchmark {
 
 void benchmark(std::function<void()> to_benchmark, clock const & clock, api & api)
 {
-    clock.now();
+    auto const start = clock.now();
     to_benchmark();
-    clock.now();
+    auto const stop = clock.now();
+    auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    api.upload_fastest_time_for("dummy", elapsed);
 }
 
 }
