@@ -31,8 +31,8 @@ namespace benchmark {
 
 void benchmark(std::function<void()> to_benchmark, clock const & clock)
 {
-    to_benchmark();
     clock.now();
+    to_benchmark();
     clock.now();
 }
 
