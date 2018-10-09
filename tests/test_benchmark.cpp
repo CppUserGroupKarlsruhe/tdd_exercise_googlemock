@@ -45,6 +45,16 @@ TEST(BenchmarkTest, ResultIsTransferredToServer) {
     mock_clock clock;
     mock_api api;
 
+    std::chrono::time_point<std::chrono::steady_clock> const before;
+    std::chrono::milliseconds const duration(10);
+    auto const after = before + duration;
+
+    EXPECT_CALL(clock, now())
+        .WillOnce(Return(before))
+        .WillOnce(Return(after));
+    EXPECT_CALL(api, upload_fastest_time_for(::testing::_, duration))
+        .Times(1);
+
     benchmark::benchmark(std::ref(f), clock, api);
 }
 
